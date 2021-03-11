@@ -7,17 +7,16 @@
   "scripts": {
     "clean:all": "yarn clean:node-modules && yarn clean:expo-cache",
     "clean:node-modules": "rimraf node_modules packages/*/node_modules apps/*/node_modules",
-    "clean:expo-cache": "rimraf apps/*/.expo",
-    "lerna": "lerna bootstrap",    
-    "clean": "lerna clean",    
+    "clean:expo-cache": "rimraf apps/*/.expo packages/*/.expo",
+    "lerna": "lerna bootstrap",
+    "clean": "lerna clean",
     "format": "prettier --write --ignore-path .gitignore packages/** apps/**",
-    "start": "yarn workspace @my/app run start",
-    "storybook": "yarn workspace @my/ui run storybook",
-    "upgrade": "lerna exec --concurrency --scope @my/* -- yarn upgrade-interactive --latest",    
-    "postinstall2": "cd apps/app && expo-yarn-workspaces postinstall"
+    "start": "yarn workspace @apps/app run start",
+    "storybook": "yarn workspace @lib/ui run storybook",
+    "upgrade": "lerna exec --concurrency --scope @my/* -- yarn upgrade-interactive --latest"
   },
   "devDependencies": {
-    "lerna": "^4.0.0",    
+    "lerna": "^4.0.0",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "expo-yarn-workspaces": "^1.3.1"
