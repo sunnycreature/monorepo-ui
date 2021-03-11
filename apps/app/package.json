@@ -10,7 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@my/ui": "1.0.0",
+    "@lib/ui": "1.0.0",
     "expo": "^40.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",

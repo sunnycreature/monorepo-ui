@@ -6,7 +6,7 @@ module.exports = async function (env, argv) {
       ...env,
       babel: {
         dangerouslyAddModulePathsToTranspile: [
-          // Ensure that all packages starting with @my are transpiled.
+          // Ensure that all packages starting with @apps @lib are transpiled.
           '@apps',
         ],
       },

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { PrimaryButton } from '@my/ui'
-import { PrimaryInput } from '@my/ui'
+import { PrimaryButton } from '@lib/ui'
+import { PrimaryInput } from '@lib/ui'
 
 export default function App() {
   const [name, setName] = useState('Stas');
