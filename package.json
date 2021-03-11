@@ -13,7 +13,7 @@
     "format": "prettier --write --ignore-path .gitignore packages/** apps/**",
     "start": "yarn workspace @apps/app run start",
     "storybook": "yarn workspace @lib/ui run storybook",
-    "upgrade": "lerna exec --concurrency --scope @lib/* -- yarn upgrade-interactive --latest"
+    "upgrade": "lerna exec --scope @lib/* -- yarn upgrade-interactive --latest"
   },
   "devDependencies": {
     "lerna": "^4.0.0",
