@@ -10,8 +10,15 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@lib/common-context": "1.0.0",
+    "@lib/common-ui": "1.0.0",
     "@lib/ui": "1.0.0",
     "expo": "^40.0.1",
+    "expo-updates": "^0.4.2",
+    "react-navigation": "^4.4.4",
+    "react-navigation-stack": "^2.10.4",
+    "react-native-gesture-handler": "~1.8.0",
+    "react-native-reanimated": "~1.13.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
