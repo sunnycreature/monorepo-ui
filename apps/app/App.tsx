@@ -1,51 +1,73 @@
-import React, { useState } from 'react'
-import { StyleSheet } from 'react-native'
-import { PrimaryButton, PrimaryInput } from '@lib/ui'
-import createAppStore from '@lib/common-context/configuration/redux/store'
-import { dependencies } from './src/configuration/dependencies'
-import { ui, AppErrorBoundary, AppView } from '@lib/common-ui/';
-import  { Provider as StoreProvider, Theme as defaultTheme }  from '@lib/common-ui/configuration'
-import { useFonts } from 'expo-font'
-import { reloadAsync } from 'expo-updates';
-import AppLoading from 'expo-app-loading'
-import AppNavigation  from './src/navcontext/ui/AppNavigation'
+import React from 'react'
+import { configureStore, RootState, LoginAction } from '@lib/common-store';
+import { Provider, useDispatch, useSelector } from 'react-redux'
+import { StyleSheet } from 'react-native';
+import { Store } from 'redux';
+// import {
+//   Provider as UIProvider,
+//   Theme as defaultTheme,
+// } from '@lib/common-ui/configuration'
+// import { useFonts } from 'expo-font'
+// import AppLoading from 'expo-app-loading'
+// import AppNavigation from './src/navigatiors/AppNavigator'
+import { Button, Text, View } from 'react-native';
+// import docReducer from './src/store/docStore/doc.reducer';
 
-const store = createAppStore(dependencies)
+/* const reducers: reducersList = {
+  documents: docReducer,
+} */
 
-/* const { Heading1, Paragraph } = ui;
+// const store = configureStore(reducers)
+const store = configureStore()
 
-const AppNavigation = () => {
-  const [name, setName] = useState('Stas');
+const Mytext = () => {
+  const { data, loading, error } = useSelector((state: RootState) => state.users);
 
-  return (
-    <AppView>
-      <Heading1>Hello</Heading1>
-      <Paragraph>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</Paragraph>
-      <PrimaryButton title="Hello, world!" />
-      <PrimaryInput value={name} label="Name" onChangeText={setName} />
-    </AppView>
+  const dispatch = useDispatch();
+
+  const handleLogin = () => {
+    dispatch(LoginAction({ userName: 'Stas', 'password': '123' }));
+  }
+
+  return (    
+    <View>
+      <Button title="Load" onPress={handleLogin} />
+      <Text>{loading ? 'is loading' : 'loaded'}</Text>
+      <Text>{error || 'no error'}</Text>
+      <Text>{data?.id || 'no data'}</Text>
+      <Text>{data?.name || 'no data'}</Text>
+    </View >
   )
 }
- */
+
 export default function App() {
-  const [loaded] = useFonts({
-    OpenSans: require('./assets/fonts/OpenSans-Regular.ttf'),
-  });
+  /*   const [loaded] = useFonts({
+      OpenSans: require('./assets/fonts/OpenSans-Regular.ttf'),
+    }) */
 
   return (
-    <AppErrorBoundary reload={reloadAsync}>
-      <StoreProvider theme={defaultTheme} store={store}>
-        {loaded ? <AppNavigation /> : <AppLoading />}
+    <Provider store={store}>
+      <View style={styles.container}>
+        <Mytext />
+      </View>
+    </Provider>
+  );
+
+
+  /*   return (
+      <StoreProvider store={store}>
+        <UIProvider theme={defaultTheme}>
+          {loaded ? <AppNavigation /> : <AppLoading />}
+        </UIProvider>
       </StoreProvider>
-    </AppErrorBoundary>
-  )
+    ) */
 }
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    // justifyContent: 'center',
-  },
+    justifyContent: 'center',
+    alignContent: 'center',
+  }
 })

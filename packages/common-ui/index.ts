@@ -1,2 +1,2 @@
-export * from './configuration';
-export * from './primitives';
+export * from './configuration'
+export * from './primitives'

@@ -1,4 +1,4 @@
-import { DefaultTheme, } from 'react-native-paper'
+import { DefaultTheme } from 'react-native-paper'
 
 import AppColor from '../primitives/AppColor'
 
@@ -8,7 +8,7 @@ const theme: typeof DefaultTheme = {
     ...DefaultTheme.colors,
     primary: AppColor.primary,
   },
-  roundness: 2,  
+  roundness: 2,
   /*
   fonts: {
     medium: 'OpenSans',

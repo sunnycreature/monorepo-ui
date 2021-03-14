@@ -1,5 +1,11 @@
 import React from 'react'
-import { StyleSheet, Platform, StyleProp, TextStyle, TextProps } from 'react-native'
+import {
+  StyleSheet,
+  Platform,
+  StyleProp,
+  TextStyle,
+  TextProps,
+} from 'react-native'
 import { AppAccessibilityRole } from './AppAccessibilityRole'
 import AppColor from './AppColor'
 import { Text } from 'react-native-paper'
