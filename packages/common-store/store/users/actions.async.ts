@@ -2,8 +2,7 @@ import { ThunkDispatch, ThunkAction } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
 import { loginUserAsync } from './actions';
-import { UserCredentials, UserPayload } from './types';
-import { RootState } from '../store';
+import { UserCredentials, UserPayload, UserState } from './types';
 /*
     you can replace this implementation with whatever api call using axios or fetch etc 
 */
@@ -12,8 +11,8 @@ function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export const LoginAction = (credentials: UserCredentials): ThunkAction<void, RootState, unknown, AnyAction> => {
-  return async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const LoginAction = (credentials: UserCredentials): ThunkAction<void, UserState, unknown, AnyAction> => {
+  return async (dispatch: ThunkDispatch<UserState, {}, AnyAction>) => {
     let response: UserPayload;
 
     dispatch(loginUserAsync.request(null));
@@ -29,13 +28,9 @@ export const LoginAction = (credentials: UserCredentials): ThunkAction<void, Roo
           }          
         };
 
-        response = {        
-          errorMessage: 'ошибка загрузки'
-        }
-
-/*         if (response.userData) {
+        if (response.userData) {
           return dispatch(loginUserAsync.success(response.userData));
-        } */
+        }
 
         return dispatch(loginUserAsync.failure(response?.errorMessage || 'чт-то не так'));
       }
