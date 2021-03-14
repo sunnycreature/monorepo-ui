@@ -2,7 +2,7 @@ import actionTypes from './action.enum';
 import { IDocActionType, IDocState } from './types';
 
 const INITIAL_STATE: IDocState = {
-  docData: {},
+  docData: [{ number: 1 }, { number: 3 }],
   loading: false,
   isLoggedIn: false,
   errorMessage: '',
@@ -19,13 +19,15 @@ const docReducer = (
   switch (action.type) {
     case actionTypes.DOC_PENDING:
       return { ...state, loading: true };
+
     case actionTypes.DOC__SUCCESS:
       return {
         ...state,
         loading: false,
-        docData: action.payload,
+        docData: action.payload.docData,
         isLoggedIn: true,
       };
+      
     case actionTypes.DOC__ERROR:
       return {
         ...state,

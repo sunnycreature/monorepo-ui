@@ -1,11 +1,12 @@
-import { CombinedState, combineReducers } from 'redux';
-import { Reducer } from 'react';
+import { StateType } from 'typesafe-actions';
+import userReducer from './user/reducer';
+import configReducer from './config/reducer';
 
-import userReducer from './users/reducer';
-
-// : Reducer<CombinedState<any>, any>
-const reducers: Reducer<CombinedState<any>, any> = combineReducers({
+const rootReducer = {
   users: userReducer,
-});
+  config: configReducer,
+};
 
-export default reducers;
+export type RootState = StateType<typeof rootReducer>;
+
+export default rootReducer;

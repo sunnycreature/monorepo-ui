@@ -1,8 +1,12 @@
 import { ActionType } from 'typesafe-actions';
 import * as actions from './doc.action.creators';
 
+export interface IDocument {
+  number: number;
+}
+
 type IDocState = {
-  docData: {};
+  docData: IDocument[] | undefined;
   loading: boolean;
   isLoggedIn: boolean;
   errorMessage: string;
@@ -10,7 +14,7 @@ type IDocState = {
 
 type IDocPayload = Partial<{
   errorMessage: string;
-  docData: {};
+  docData: IDocument[];
 }>;
 
 type IDocActionType = ActionType<typeof actions>;
