@@ -1,0 +1,12 @@
+{
+  "name": "@lib/client-api",
+  "version": "1.0.0",
+  "main": "src/index.tsx",
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "babel-loader": "^8.2.2",
+    "axios": "^0.21.1"
+  },
+  "scripts": {
+  }
+}
