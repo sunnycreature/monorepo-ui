@@ -1,5 +1,4 @@
 import { IResponse, IUser } from '@lib/types';
-import axios from 'axios';
 
 import {
   IAllUsersResponse,
@@ -9,15 +8,10 @@ import {
   IUpdateUserResponse,
 } from '../queryTypes';
 
-const deviceId = '123';
-const url = 'http://localhost:3333';
-
-const api = axios.create({
-  baseURL: url,
-});
+import { api } from '../params';
 
 const getUsers = async () => {
-  const res = await api.get<IResponse<IUser[]>>(`/users?deviceId=${deviceId}`);
+  const res = await api.get<IResponse<IUser[]>>(`/users`);
   const userData = res.data;
 
   if (userData.result) {
@@ -52,7 +46,7 @@ const getUsers = async () => {
 
 const getUser = async (userId: string) => {
   const res = await api.get<IResponse<IUser>>(
-    `/users/${userId}?deviceId=${deviceId}`
+    `/users/${userId}`
   );
   const userData = res.data;
 
@@ -70,7 +64,7 @@ const getUser = async (userId: string) => {
 
 const updateUser = async (user: Partial<IUser>) => {
   const res = await api.patch<IResponse<string>>(
-    `/users/${user.id}?deviceId=${deviceId}`,
+    `/users/${user.id}`,
     user
   );
   const userData = res.data;
@@ -89,7 +83,7 @@ const updateUser = async (user: Partial<IUser>) => {
 
 const removeUser = async (userId: string) => {
   const res = await api.delete<IResponse<void>>(
-    `/users/${userId}?deviceId=${deviceId}`
+    `/users/${userId}`
   );
   const userData = res.data;
 
