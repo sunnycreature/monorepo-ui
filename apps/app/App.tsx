@@ -1,8 +1,7 @@
 import React from 'react'
 import { configureStore, RootState, LoginAction } from '@lib/common-store';
 import { Provider, useDispatch, useSelector } from 'react-redux'
-import { StyleSheet } from 'react-native';
-import { Store } from 'redux';
+import { StyleSheet, TextInput } from 'react-native';
 // import {
 //   Provider as UIProvider,
 //   Theme as defaultTheme,
@@ -21,11 +20,11 @@ import { Button, Text, View } from 'react-native';
 const store = configureStore()
 
 const Mytext = () => {
-  const { data, loading, error } = useSelector((state: RootState) => state.users);
+  const { data, loading, error, status } = useSelector((state: RootState) => state.users);
 
   const dispatch = useDispatch();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {    
     dispatch(LoginAction({ userName: 'Stas', 'password': '123' }));
   }
 
@@ -33,7 +32,7 @@ const Mytext = () => {
     <View>
       <Button title="Load" onPress={handleLogin} />
       <Text>{loading ? 'is loading' : 'loaded'}</Text>
-      <Text>{error || 'no error'}</Text>
+      <Text>{error ? status : 'no error'}</Text>
       <Text>{data?.id || 'no data'}</Text>
       <Text>{data?.name || 'no data'}</Text>
     </View >

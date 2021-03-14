@@ -3,6 +3,7 @@ import { AnyAction } from 'redux';
 
 import { loginUserAsync } from './actions';
 import { UserCredentials, UserPayload } from './types';
+import { RootState } from '../store';
 /*
     you can replace this implementation with whatever api call using axios or fetch etc 
 */
@@ -11,18 +12,13 @@ function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-/**
- *
- * @param username
- * @param password
- */
-export const LoginAction = (credentials: UserCredentials): ThunkAction<void, {}, {}, AnyAction> => {
-  return (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const LoginAction = (credentials: UserCredentials): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     let response: UserPayload;
 
-    dispatch(loginUserAsync.request(credentials));
+    dispatch(loginUserAsync.request(null));
 
-    sleep(200);
+    await sleep(2000);
 
     if (credentials.userName === 'Stas') {
       if (credentials.password === '123') {
@@ -30,14 +26,18 @@ export const LoginAction = (credentials: UserCredentials): ThunkAction<void, {},
           userData: {
             id: "1",
             name: 'Stas',
-          }
+          }          
         };
 
-        if (response.userData) {
-          return dispatch(loginUserAsync.success(response.userData));
+        response = {        
+          errorMessage: 'ошибка загрузки'
         }
 
-        return dispatch(loginUserAsync.failure(response?.errorMessage || ''));
+/*         if (response.userData) {
+          return dispatch(loginUserAsync.success(response.userData));
+        } */
+
+        return dispatch(loginUserAsync.failure(response?.errorMessage || 'чт-то не так'));
       }
       return dispatch(loginUserAsync.failure('wrong password'));
     }

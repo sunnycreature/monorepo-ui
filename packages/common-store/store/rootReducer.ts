@@ -4,7 +4,7 @@ import { Reducer } from 'react';
 import userReducer from './users';
 
 // : Reducer<CombinedState<any>, any>
-const reducers = combineReducers({
+const reducers: Reducer<CombinedState<any>, any> = combineReducers({
   users: userReducer,
 });
 

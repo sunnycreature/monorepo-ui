@@ -21,11 +21,6 @@ export interface UserState {
   readonly status: string;
 }
 
-/* export interface LoginAction {
-  type: string;
-  payload: T;
-} */
-
 export type UserPayload = Partial<{
   errorMessage: string;
   userData: User;
