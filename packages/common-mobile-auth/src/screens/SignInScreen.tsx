@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, KeyboardAvoidingView, StyleSheet, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Text, TextInput, IconButton, Button, ActivityIndicator, useTheme } from 'react-native-paper';
 
-import { IUserCredentials } from '@lib/types';
+import { IDataFetch, IUserCredentials } from '@lib/types';
 
 // import { useAuth } from '../context/auth';
-import  { globalStyles } from '@lib/common-ui';
+import { globalStyles } from '@lib/common-ui';
 // import globalStyles from '../styles/global';
 
 /*
@@ -17,22 +17,16 @@ import  { globalStyles } from '@lib/common-ui';
     2.1) Вход удался -> вызываем actions.setUserStatus(true);
     2.2) Вход не удался -> отображаем сообщение об ошибке
 */
-const SignInScreen = () => {
-  const { colors } = useTheme();
 
-  const serverReq = {
-    isError: false,
-    isLoading: false,
-    status: '',
-  };
-  
-  const disconnect = () => { };
-  const signIn = (credential: IUserCredentials) => { };  
-/*   const {
-    signIn,
-    disconnect,
-    loading: { serverReq },
-  } = useAuth(); */
+type Props = {
+  serverReq: IDataFetch;
+  onDisconnect: () => void;
+  onSignIn: (credentials: IUserCredentials) => void;
+};
+
+const SignInScreen = (props: Props) => {
+  const { onDisconnect, onSignIn, serverReq } = props;
+  const { colors } = useTheme();
 
   const [credential, setCredentials] = useState<IUserCredentials>({
     userName: '',
@@ -52,9 +46,9 @@ const SignInScreen = () => {
     };
   }, []);
 
-  const logIn = async () => {
+  const logIn = () => {
     Keyboard.dismiss();
-    await signIn(credential);
+    onSignIn(credential);
   };
 
   return (
@@ -62,7 +56,7 @@ const SignInScreen = () => {
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView style={[globalStyles.container, isKeyboardVisible && style.contentWidthKbd]}>
           <View>
-            <Text>Вход пользователя</Text>
+            <Text style={globalStyles.title}>Вход пользователя</Text>
             <TextInput
               returnKeyType="done"
               autoCorrect={false}
@@ -102,10 +96,7 @@ const SignInScreen = () => {
         <IconButton
           icon="server"
           size={30}
-          onPress={() => {
-            disconnect();
-            console.log('disconnect');
-          }}
+          onPress={onDisconnect}
           style={{
             ...globalStyles.circularButton,
             backgroundColor: colors.primary,

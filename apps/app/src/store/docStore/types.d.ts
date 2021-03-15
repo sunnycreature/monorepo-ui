@@ -6,10 +6,10 @@ export interface IDocument {
 }
 
 type IDocState = {
-  docData: IDocument[] | undefined;
-  loading: boolean;
-  isLoggedIn: boolean;
-  errorMessage: string;
+  readonly docData: IDocument[] | undefined;
+  readonly loading: boolean;
+  readonly isLoggedIn: boolean;
+  readonly errorMessage: string;
 };
 
 type IDocPayload = Partial<{

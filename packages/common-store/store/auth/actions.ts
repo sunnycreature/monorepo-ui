@@ -1,19 +1,26 @@
-import { IBaseUrl, IDevice } from '@lib/types';
+import { IBaseUrl, IDevice, IUser } from '@lib/types';
 import { ActionType, createAction, createAsyncAction } from 'typesafe-actions';
 
-import { AuthTypes, IAuthState } from './types';
+import { IAuthState } from './types';
 
-export const init = createAction(AuthTypes.INIT)<IAuthState>();
-export const setSettings = createAction(AuthTypes.SET_SETTINGS)<IBaseUrl>();
-export const setDevice = createAction(AuthTypes.SET_DEVICE)<IDevice>();
-export const setSettingsForm = createAction(AuthTypes.SET_SETTINGS_FORM)<boolean>();
+const init = createAction('AUTH/INIT')<IAuthState>();
+export const setSettings = createAction('AUTH/SET_SETTINGS')<IBaseUrl>();
 
-export const checkDeviceAsync = createAsyncAction(
-  AuthTypes.CONNECTION,
-  AuthTypes.CONNECTION_SUCCCES,
-  AuthTypes.CONNECTION_FAILURE,
-)<null, IDevice, string>();
+export const setSettingsForm = createAction('AUTH/SET_SETTINGS_FORM')<boolean>();
+export const disconnect = createAction('AUTH/DISCONNECT')();
 
-const actions = { init, setSettings, setDevice, setSettingsForm, checkDeviceAsync };
+const checkDeviceAsync = createAsyncAction(
+  'AUTH/CONNECTION',
+  'AUTH/CONNECTION_SUCCCES',
+  'AUTH/CONNECTION_FAILURE',
+)<undefined, IDevice, string>();
 
-export type AuthActionType = ActionType<typeof actions>;
+const loginUserAsync = createAsyncAction(
+  'AUTH/LOGIN',
+  'AUTH/LOGIN_SUCCCES',
+  'AUTH/LOGIN_FAILURE',
+)<{}, IUser, string>();
+
+export const authActions = { init, setSettings, disconnect, setSettingsForm, checkDeviceAsync, loginUserAsync };
+
+export type AuthActionType = ActionType<typeof authActions>;

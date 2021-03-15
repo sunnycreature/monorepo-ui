@@ -28,7 +28,6 @@ function configureStore() {
     ...rootStore,
     asyncReducers: {},
     addReducer: (key, asyncReducer) => {
-      console.log("key", key);
       if (!store || !key || !store.asyncReducers) {
         return;
       }

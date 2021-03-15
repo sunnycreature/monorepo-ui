@@ -1,27 +1,52 @@
 import { Reducer } from 'redux';
 
 import { config } from '../../mock'
-import { AuthTypes, IAuthState } from './types';
-import { AuthActionType } from './actions';
+import { IAuthState } from './types';
+import { AuthActionType, authActions } from './actions';
+import { getType } from 'typesafe-actions';
 
-const initialState: IAuthState = {
+const initialState: Readonly<IAuthState> = {
+  user: undefined,
   device: undefined,
   settings: config,
   error: false,
   loading: false,
-  status: ''
+  status: '',
+  settingsForm: false
 };
 
 const reducer: Reducer<IAuthState, AuthActionType> = (state = initialState, action: AuthActionType) => {
   switch (action.type) {
-    case AuthTypes.INIT:
+    case getType(authActions.init):
       return initialState;
 
-    case AuthTypes.SET_DEVICE:
-      return { ...state, device: action.payload };
+    case getType(authActions.disconnect):
+      return { ...state, device: undefined, error: false, status: '', loading: false };
 
-    case AuthTypes.SET_SETTINGS:
-      return { ...state, settings: action.payload };
+    case getType(authActions.setSettingsForm):
+      return { ...state, settingsForm: action.payload };
+
+    case getType(authActions.setSettings):
+      return { ...state, settings: action.payload, settingsForm: false };
+
+    case getType(authActions.checkDeviceAsync.request):
+      return { ...state, loading: true, status: '', error: false };
+
+    case getType(authActions.checkDeviceAsync.success):
+      return { ...state, loading: false, status: '', error: false, device: action.payload };
+
+    case getType(authActions.checkDeviceAsync.failure):
+      return { ...state, loading: false, status: action.payload, error: true };
+
+    case getType(authActions.loginUserAsync.request):
+      return { ...state, error: false, status: '', loading: true };
+
+    case getType(authActions.loginUserAsync.success):
+      return { ...state, user: action.payload, error: false, status: '', loading: false };
+
+    case getType(authActions.loginUserAsync.failure):
+      return { ...state, error: true, status: action.payload, loading: false };
+
 
     default:
       return state;

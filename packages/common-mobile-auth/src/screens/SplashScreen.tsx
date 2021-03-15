@@ -3,26 +3,25 @@ import React from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { Text, Button, IconButton, useTheme } from 'react-native-paper';
 
-// import globalStyles from '../styles/global';
 import  { globalStyles } from '@lib/common-ui';
 
 type Props = {
   settings: IBaseUrl | undefined;
   serverReq: IDataFetch;
-  checkDevice?: () => void;
-  breakConnection?: () => void;
-  showSettings: (visible: boolean) => void;
+  onCheckDevice: () => void;
+  onBreakConnection?: () => void;
+  onShowSettings: (visible: boolean) => void;
 };
 
 const SplashScreen = (props: Props) => {
-  const { checkDevice, breakConnection, serverReq, settings, showSettings } = props;
-
+  const { onCheckDevice, onBreakConnection, serverReq, settings, onShowSettings } = props;
+ 
   const { colors } = useTheme();
 
   return (
     <>
       <View style={[globalStyles.container, localStyles.container]}>
-        <Text>Подключение к серверу</Text>
+        <Text style={globalStyles.title}>Подключение к серверу</Text>
         <Text style={localStyles.serverName}>
           {settings ? `${settings.protocol}${settings.server}:${settings.port}` : 'сервер не указан'}
         </Text>
@@ -37,7 +36,7 @@ const SplashScreen = (props: Props) => {
         </View>
         {!serverReq.isLoading ? (
           <Button
-            onPress={checkDevice}
+            onPress={onCheckDevice}
             icon="apps"
             mode="contained"
             style={[globalStyles.rectangularButton, localStyles.buttons]}
@@ -46,7 +45,7 @@ const SplashScreen = (props: Props) => {
           </Button>
         ) : (
           <Button
-            onPress={breakConnection}
+            onPress={onBreakConnection}
             icon="block-helper"
             mode="contained"
             style={[globalStyles.rectangularButton, localStyles.buttons]}
@@ -59,7 +58,7 @@ const SplashScreen = (props: Props) => {
         <IconButton
           icon="server"
           size={30}
-          onPress={() => showSettings(true)}
+          onPress={() => onShowSettings(true)}
           color={colors.background}
           style={[globalStyles.circularButton, { backgroundColor: colors.primary }]}
         />

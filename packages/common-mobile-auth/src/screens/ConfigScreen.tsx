@@ -48,7 +48,7 @@ const ConfigScreen = (props: Props) => {
 
   return (
     <KeyboardAvoidingView style={globalStyles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <Text>Настройка подключения</Text>
+      <Text style={globalStyles.title}>Настройка подключения</Text>
       <TextInput
         value={serverName}
         onChangeText={setServerName}

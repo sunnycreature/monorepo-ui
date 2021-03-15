@@ -1,12 +1,14 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useCallback } from 'react';
-import { userActions, authActions, RootState,  } from '@lib/common-store';
+import { useDispatch, useSelector } from 'react-redux'
 
 import { ConfigScreen } from '../screens/ConfigScreen';
 import { ActivationScreen } from '../screens/ActivationScreen';
 import { SignInScreen } from '../screens/SignInScreen';
 import { SplashScreen } from '../screens/SplashScreen';
-import { IBaseUrl } from '@lib/types';
+
+import { authActions, RootState } from '@lib/common-store';
+import { IBaseUrl, IUserCredentials } from '@lib/types';
 
 
 type AuthStackParamList = {
@@ -20,48 +22,44 @@ type AuthStackParamList = {
 const AuthStack = createStackNavigator<AuthStackParamList>();
 
 const AuthNavigator: React.FC = () => {
-  // const { docData } = useSelector((state: RootState) => state.docs);  
-/*   const {
-    device,
-    settingsForm,
-    settings,
-    showSettings,
-    setSettings,
-    checkDevice,
-    loading: { serverReq },
-  } = state; */
+  const { device, settings, error, loading, status, settingsForm } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
-  const device = undefined;
-  const settingsForm = undefined;
-  const settings = undefined;
-  const showSettings = (visible: boolean) => {};;    
-  const setSettings = (ettings: IBaseUrl) => {};
-  
+  const showSettings = (visible: boolean) => dispatch(authActions.setSettingsForm(visible));
+  const saveSettings = (settings: IBaseUrl) => dispatch(authActions.setSettings(settings));
+  const checkDevice = () => dispatch(authActions.checkDevice());
+  const disconnect = () => dispatch(authActions.disconnect());
+  const signIn = (credentials: IUserCredentials) => dispatch(authActions.signIn(credentials))
+
   const serverReq = {
-    isError: false,
-    isLoading: false,
-    status: '',
+    isError: error,
+    isLoading: loading,
+    status: status,
   };
 
-  const { checkDevice } = authActions;
-
-
   const CongfigWithParams = useCallback(
-    () => <ConfigScreen setSettings={setSettings} showSettings={showSettings} settings={settings} />,
-    [setSettings, settings, showSettings],
+    () => <ConfigScreen setSettings={saveSettings} showSettings={showSettings} settings={settings} />,
+    [saveSettings, showSettings, settings],
   );
 
   const SplashWithParams = useCallback(
     () => (
-      <SplashScreen serverReq={serverReq} showSettings={showSettings} settings={settings} checkDevice={checkDevice} />
+      <SplashScreen serverReq={serverReq} onShowSettings={showSettings} settings={settings} onCheckDevice={checkDevice} />
     ),
-    [checkDevice, serverReq, settings, showSettings],
+    [checkDevice, showSettings, serverReq, settings],
+  );
+
+  const SignInWithParams = useCallback(
+    () => (
+      <SignInScreen serverReq={serverReq} onDisconnect={disconnect} onSignIn={signIn} />
+    ),
+    [signIn, disconnect, serverReq],
   );
 
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       {device ? (
-        <AuthStack.Screen name="Login" component={SignInScreen} />
+        <AuthStack.Screen name="Login" component={SignInWithParams} />
       ) : settingsForm ? (
         <AuthStack.Screen name="Config" component={CongfigWithParams} />
       ) : device === undefined ? (

@@ -37,6 +37,8 @@ const globalstyles = StyleSheet.create({
     height: StyleSheet.hairlineWidth,
   },
   title: {
+    margin: 3,
+    fontSize: 18,
     textAlign: 'center',
   },
 });
