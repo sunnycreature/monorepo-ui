@@ -1,17 +1,8 @@
-import { IResponse, IUser, IUserCredentials } from '@lib/types';
+import { IResponse, IUser, IUserCredentials } from '@lib/common-types';
 
-import { api, deviceId } from '../params';
+import { api, deviceId } from '../config';
 
-import {
-  ICreateCodeResponse,
-  ILoginResponse,
-  ILogOutResponse,
-  INetworkError,
-  ISignUpResponse,
-  IUserNotAuthResponse,
-  IUserResponse,
-  IVerifyCodeResponse,
-} from '../queryTypes';
+import { INetworkError, authTypes as types } from '../types';
 
 const signup = async (
   userName: string,
@@ -32,7 +23,7 @@ const signup = async (
     return {
       type: 'SIGNUP',
       userId: resData.data,
-    } as ISignUpResponse;
+    } as types.ISignUpResponse;
   }
   return {
     type: 'ERROR',
@@ -52,7 +43,7 @@ const login = async (userCredentials: IUserCredentials) => {
     return {
       type: 'LOGIN',
       userId: resData.data,
-    } as ILoginResponse;
+    } as types.ILoginResponse;
   }
   return {
     type: 'ERROR',
@@ -67,7 +58,7 @@ const logout = async () => {
   if (resData.result) {
     return {
       type: 'LOGOUT',
-    } as ILogOutResponse;
+    } as types.ILogOutResponse;
   }
   return {
     type: 'ERROR',
@@ -83,12 +74,12 @@ const getCurrentUser = async () => {
     return {
       type: 'GET_CURRENT_USER',
       user: resData.data,
-    } as IUserResponse;
+    } as types.IUserResponse;
   }
   if (!resData.result) {
     return {
       type: 'USER_NOT_AUTHENTICATED',
-    } as IUserNotAuthResponse;
+    } as types.IUserNotAuthResponse;
   }
   return {
     type: 'ERROR',
@@ -104,7 +95,7 @@ const getActivationCode = async () => {
     return {
       type: 'GET_CODE',
       code: resData.data,
-    } as ICreateCodeResponse;
+    } as types.ICreateCodeResponse;
   }
   return {
     type: 'ERROR',
@@ -121,7 +112,7 @@ const verifyCode = async (code: string) => {
     return {
       type: 'VERIFY_CODE',
       deviceUid: resData.data,
-    } as IVerifyCodeResponse;
+    } as types.IVerifyCodeResponse;
   }
   return {
     type: 'ERROR',

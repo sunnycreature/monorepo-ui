@@ -1,12 +1,11 @@
 {
-  "name": "@lib/client-api",
+  "name": "@lib/common-mob-types",
   "version": "1.0.0",
   "main": "./index.ts",
   "devDependencies": {
     "@babel/core": "^7.13.10",
     "babel-loader": "^8.2.2",
-    "axios": "^0.21.1",
-    "@lib/common-types": "1.0.0"
+    "@lib/common-client-types": "1.0.0"
   },
   "scripts": {
   }

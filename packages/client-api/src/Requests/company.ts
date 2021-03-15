@@ -1,16 +1,8 @@
-import { ICompany, IResponse, IUser } from '@lib/types';
+import { ICompany, IResponse, IUser } from '@lib/common-types';
 
-import {
-  IAddCompanyResponse,
-  IGetCompaniesResponse,
-  IGetCompanyResponse,
-  IGetCompanyUsersResponse,
-  INetworkError,
-  IRemoveCompanyResponse,
-  IUpdateCompanyResponse,
-} from '../queryTypes';
+import {INetworkError, companyTypes as types } from '../types';
 
-import { api } from '../params';
+import { api } from '../config';
 
 const addCompany = async (title: string, externalId: string) => {
   const body = {
@@ -24,7 +16,7 @@ const addCompany = async (title: string, externalId: string) => {
     return {
       type: 'ADD_COMPANY',
       companyId: resData.data,
-    } as IAddCompanyResponse;
+    } as types.IAddCompanyResponse;
   }
   return {
     type: 'ERROR',
@@ -40,7 +32,7 @@ const getCompanies = async () => {
     return {
       type: 'GET_COMPANIES',
       companies: resData.data,
-    } as IGetCompaniesResponse;
+    } as types.IGetCompaniesResponse;
   }
   return {
     type: 'ERROR',
@@ -56,7 +48,7 @@ const getCompany = async (companyId: string) => {
     return {
       type: 'GET_COMPANY',
       company: resData.data,
-    } as IGetCompanyResponse;
+    } as types.IGetCompanyResponse;
   }
   return {
     type: 'ERROR',
@@ -75,7 +67,7 @@ const updateCompany = async (company: Partial<ICompany>) => {
     return {
       type: 'UPDATE_COMPANY',
       companyId: resData.data,
-    } as IUpdateCompanyResponse;
+    } as types.IUpdateCompanyResponse;
   }
   return {
     type: 'ERROR',
@@ -93,7 +85,7 @@ const getUsersByCompany = async (companyId: string) => {
     return {
       type: 'GET_USERS_BY_COMPANY',
       users: resData.data,
-    } as IGetCompanyUsersResponse;
+    } as types.IGetCompanyUsersResponse;
   }
   return {
     type: 'ERROR',
@@ -108,7 +100,7 @@ const removeCompany = async (companyId: string) => {
   if (resData.result) {
     return {
       type: 'REMOVE_COMPANY',
-    } as IRemoveCompanyResponse;
+    } as types.IRemoveCompanyResponse;
   }
   return {
     type: 'ERROR',

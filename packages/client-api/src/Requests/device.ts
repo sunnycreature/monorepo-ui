@@ -1,16 +1,8 @@
-import { IDevice, IDeviceInfo, IResponse } from '@lib/types';
+import { IDevice, IDeviceInfo, IResponse } from '@lib/common-types';
 
-import {
-  IAddDeviceResponse,
-  IGetDeviceResponse,
-  IGetDevicesResponse,
-  IGetUsersByDeviceResponse,
-  INetworkError,
-  IRemoveDeviceResponse,
-  IUpdateDeviceResponse,
-} from '../queryTypes';
+import { INetworkError, deviceTypes } from '../types';
 
-import { api } from '../params';
+import { api } from '../config';
 
 const addDevice = async (deviceName: string, userId: string) => {
   const body = {
@@ -24,7 +16,7 @@ const addDevice = async (deviceName: string, userId: string) => {
     return {
       type: 'ADD_DEVICE',
       uid: resData.data,
-    } as IAddDeviceResponse;
+    } as deviceTypes.IAddDeviceResponse;
   }
   return {
     type: 'ERROR',
@@ -48,7 +40,7 @@ const getDevices = async (userId?: string) => {
     return {
       type: 'GET_DEVICES',
       devices: resData.data,
-    } as IGetDevicesResponse;
+    } as deviceTypes.IGetDevicesResponse;
   }
   return {
     type: 'ERROR',
@@ -73,32 +65,13 @@ const getDevice = async (deviceId: string, userId?: string) => {
     return {
       type: 'GET_DEVICE',
       device: resData.data,
-    } as IGetDeviceResponse;
+    } as deviceTypes.IGetDeviceResponse;
   }
   return {
     type: 'ERROR',
     message: resData.error,
   } as INetworkError;
 };
-
-// /* Проверка устройства по пользователю - есть ли в базе сервера */
-// const getDeviceByUser = async (userName: string) => {
-//   const res = await api.get<IResponse<IDevice>>(
-//     `/devices/${deviceId}/user/${userName}`
-//   );
-//   const resData = res.data;
-
-//   if (resData.result) {
-//     return {
-//       type: 'GET_DEVICE_BY_USER',
-//       device: resData.data,
-//     } as IGetDeviceByUserResponse;
-//   }
-//   return {
-//     type: 'ERROR',
-//     message: resData.error,
-//   } as INetworkError;
-// };
 
 const getUsersByDevice = async (deviceId: string) => {
   const res = await api.get<IResponse<IDeviceInfo[]>>(
@@ -110,7 +83,7 @@ const getUsersByDevice = async (deviceId: string) => {
     return {
       type: 'GET_USERS_BY_DEVICE',
       userList: resData.data,
-    } as IGetUsersByDeviceResponse;
+    } as deviceTypes.IGetUsersByDeviceResponse;
   }
   return {
     type: 'ERROR',
@@ -129,7 +102,7 @@ const updateDevice = async (device: Partial<IDevice>) => {
     return {
       type: 'UPDATE_DEVICE',
       deviceId: resData.data,
-    } as IUpdateDeviceResponse;
+    } as deviceTypes.IUpdateDeviceResponse;
   }
   return {
     type: 'ERROR',
@@ -144,7 +117,7 @@ const removeDevice = async (deviceId: string) => {
   if (resData.result) {
     return {
       type: 'REMOVE_DEVICE',
-    } as IRemoveDeviceResponse;
+    } as deviceTypes.IRemoveDeviceResponse;
   }
   return {
     type: 'ERROR',

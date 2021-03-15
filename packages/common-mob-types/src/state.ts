@@ -1,22 +1,20 @@
-// import Api from "../service/Api";
-// import Sync from "../service/Storage";
-// import { AppActions, AuthActions, ServiceActions } from "../store";
 
 import { IReferences, IModels } from './data';
 import { IDocument } from './document';
 
-export interface IBaseUrl {
-  protocol: string;
-  server: string;
-  port: number;
-  timeout: number;
-  apiPath: string;
-}
+import { IBaseUrl } from '@lib/common-client-types';
 
 export interface IDataFetch {
   isLoading: boolean;
   isError: boolean;
   status?: string;
+}
+
+export interface IServiceState {
+  isLoading: boolean;
+  serverUrl?: IBaseUrl;
+  deviceId?: string;
+  storagePath?: string;
 }
 
 export interface IServiceContextProps {
@@ -34,13 +32,6 @@ export interface IAuthContextProps {
 export interface IAppContextProps {
   state: IAppState;
   // actions: typeof AppActions;
-}
-
-export interface IServiceState {
-  isLoading: boolean;
-  serverUrl?: IBaseUrl;
-  deviceId?: string;
-  storagePath?: string;
 }
 
 export interface IAuthState {

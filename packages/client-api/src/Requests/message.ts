@@ -1,16 +1,8 @@
-import { IMessage, IMessageInfo, IResponse } from '@lib/types';
+import { IMessage, IMessageInfo, IResponse } from '@lib/common-types';
 
-import {
-  IClearMessagesResponse,
-  IGetMessagesResponse,
-  INetworkError,
-  IPublishResponse,
-  IRemoveMessageResponse,
-  ISendCompanyResponse,
-  ISubscribeResponse,
-} from '../queryTypes';
+import { INetworkError, messageTypes as types } from '../types';
 
-import { api } from '../params';
+import { api } from '../config';
 
 const sendMessages = async (
   systemName: string,
@@ -29,7 +21,7 @@ const sendMessages = async (
       type: 'SEND_MESSAGE',
       uid: resData.data?.uid,
       date: resData.data?.date,
-    } as ISendCompanyResponse;
+    } as types.ISendMessageResponse;
   }
   return {
     type: 'ERROR',
@@ -47,7 +39,7 @@ const getMessages = async (systemName: string, companyId: string) => {
     return {
       type: 'GET_MESSAGES',
       messageList: resData.data,
-    } as IGetMessagesResponse;
+    } as types.IGetMessagesResponse;
   }
   return {
     type: 'ERROR',
@@ -64,7 +56,7 @@ const removeMessage = async (companyId: string, uid: string) => {
   if (resData.result) {
     return {
       type: 'REMOVE_MESSAGE',
-    } as IRemoveMessageResponse;
+    } as types.IRemoveMessageResponse;
   }
   return {
     type: 'ERROR',
@@ -79,7 +71,7 @@ const clear = async () => {
   if (resData.result) {
     return {
       type: 'CLEAR_MESSAGES',
-    } as IClearMessagesResponse;
+    } as types.IClearMessagesResponse;
   }
   return {
     type: 'ERROR',
@@ -97,7 +89,7 @@ const subscribe = async (systemName: string, companyId: string) => {
     return {
       type: 'SUBSCRIBE',
       messageList: resData.data,
-    } as ISubscribeResponse;
+    } as types.ISubscribeResponse;
   }
   return {
     type: 'ERROR',
@@ -122,7 +114,7 @@ const publish = async (
       type: 'PUBLISH',
       uid: resData.data?.uid,
       date: resData.data?.date,
-    } as IPublishResponse;
+    } as types.IPublishResponse;
   }
   return {
     type: 'ERROR',

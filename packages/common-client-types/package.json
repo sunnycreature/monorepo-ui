@@ -1,7 +1,7 @@
 {
-  "name": "@lib/types",
+  "name": "@lib/common-client-types",
   "version": "1.0.0",
-  "main": "src/index.tsx",
+  "main": "./index.ts",
   "devDependencies": {
     "@babel/core": "^7.13.10",
     "babel-loader": "^8.2.2"

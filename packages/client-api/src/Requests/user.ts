@@ -1,14 +1,8 @@
-import { IResponse, IUser } from '@lib/types';
+import { IResponse, IUser } from '@lib/common-types';
 
-import {
-  IAllUsersResponse,
-  IGetUserResponse,
-  INetworkError,
-  IRemoveUserResponse,
-  IUpdateUserResponse,
-} from '../queryTypes';
+import { INetworkError, userTypes as types } from '../types';
 
-import { api } from '../params';
+import { api } from '../config';
 
 const getUsers = async () => {
   const res = await api.get<IResponse<IUser[]>>(`/users`);
@@ -18,31 +12,13 @@ const getUsers = async () => {
     return {
       type: 'GET_USERS',
       users: userData.data,
-    } as IAllUsersResponse;
+    } as types.IGetUsersResponse;
   }
   return {
     type: 'ERROR',
     message: userData.error,
   } as INetworkError;
 };
-
-// const getDevicesByUser = async (userId: string) => {
-//   const res = await api.get<IResponse<IDeviceInfo[]>>(
-//     `/users/${userId}/devices`
-//   );
-//   const userData = res.data;
-
-//   if (userData.result) {
-//     return {
-//       type: 'GET_DEVICES_BY_USER',
-//       devices: userData.data,
-//     } as IGetDevicesByUserResponse;
-//   }
-//   return {
-//     type: 'ERROR',
-//     message: userData.error,
-//   } as INetworkError;
-// };
 
 const getUser = async (userId: string) => {
   const res = await api.get<IResponse<IUser>>(
@@ -54,7 +30,7 @@ const getUser = async (userId: string) => {
     return {
       type: 'GET_USER',
       user: userData.data,
-    } as IGetUserResponse;
+    } as types.IGetUserResponse;
   }
   return {
     type: 'ERROR',
@@ -73,7 +49,7 @@ const updateUser = async (user: Partial<IUser>) => {
     return {
       type: 'UPDATE_USER',
       userId: userData.data,
-    } as IUpdateUserResponse;
+    } as types.IUpdateUserResponse;
   }
   return {
     type: 'ERROR',
@@ -90,7 +66,7 @@ const removeUser = async (userId: string) => {
   if (userData.result) {
     return {
       type: 'REMOVE_USER',
-    } as IRemoveUserResponse;
+    } as types.IRemoveUserResponse;
   }
   return {
     type: 'ERROR',
