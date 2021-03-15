@@ -14,7 +14,7 @@ const checkDevice = (): ThunkAction<void, IAuthState, unknown, AnyAction> => {
   return async (dispatch) => {
     let response: DevicePayload = { deviceData: device };
 
-    dispatch(authActions.checkDeviceAsync.request());
+    dispatch(authActions.checkDeviceAsync.request('', ''));
 
     await sleep(1000);
 
@@ -30,7 +30,7 @@ const signIn = (credentials: IUserCredentials): ThunkAction<void, IAuthState, un
   return async (dispatch) => {
     let response: UserPayload;
 
-    dispatch(authActions.loginUserAsync.request());
+    dispatch(authActions.loginUserAsync.request(''));
 
     await sleep(1000);
 

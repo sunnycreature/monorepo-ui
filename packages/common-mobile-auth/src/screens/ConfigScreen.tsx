@@ -5,9 +5,6 @@ import { View, KeyboardAvoidingView, Platform, TextInput, StyleSheet } from 'rea
 import { Text, Button } from 'react-native-paper';
 
 import  { globalStyles } from '@lib/common-ui';
-// import styles from '../styles/global';
-
-import { config } from './constants';
 
 export type Props = {
   settings: IBaseUrl | undefined;
@@ -17,9 +14,9 @@ export type Props = {
 
 const ConfigScreen = (props: Props) => {
   const { settings, setSettings, showSettings } = props;
-  const [serverName, setServerName] = useState(settings?.server || config.server);
-  const [serverPort, setServerPort] = useState(settings?.port.toString() || config.port.toString());
-  const [timeout, setTimeout] = useState(settings?.timeout?.toString() || config.timeout.toString());
+  const [serverName, setServerName] = useState(settings?.server || '');
+  const [serverPort, setServerPort] = useState(settings?.port.toString() || '');
+  const [timeout, setTimeout] = useState(settings?.timeout?.toString() || '');
 
   const { colors } = useTheme();
 
@@ -28,11 +25,11 @@ const ConfigScreen = (props: Props) => {
     const protocol: string = match?.[1] || config.protocol;
     const server: string = match?.[2] || config.server; */
 
-    const protocol: string = config.protocol;
-    const server: string = serverName || config.protocol;
+    const protocol: string = settings?.protocol || '';
+    const server: string = serverName;
 
     const url: IBaseUrl = {
-      apiPath: config.apiPath,
+      apiPath: settings?.apiPath || '',
       protocol,
       port: parseInt(serverPort, 10),
       timeout: parseInt(timeout, 10),

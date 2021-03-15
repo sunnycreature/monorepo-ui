@@ -19,7 +19,7 @@ const loginUserAsync = createAsyncAction(
   'AUTH/LOGIN',
   'AUTH/LOGIN_SUCCCES',
   'AUTH/LOGIN_FAILURE',
-)<{}, IUser, string>();
+)<string, IUser, string>();
 
 export const authActions = { init, setSettings, disconnect, setSettingsForm, checkDeviceAsync, loginUserAsync };
 

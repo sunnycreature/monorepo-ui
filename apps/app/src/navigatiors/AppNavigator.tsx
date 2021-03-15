@@ -1,7 +1,8 @@
-import { Menu } from '@lib/common-nav';
+import React from 'react';
+import { DrawerNavigator } from '@lib/common-mobile-nav';
 
-const appNavigation = () => {
-  return <Menu />;
+const AppNavigation = () => {
+  return <DrawerNavigator />;
 }
 
-export default appNavigation;
+export default AppNavigation;

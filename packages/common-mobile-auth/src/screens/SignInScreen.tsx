@@ -29,9 +29,11 @@ const SignInScreen = (props: Props) => {
   const { colors } = useTheme();
 
   const [credential, setCredentials] = useState<IUserCredentials>({
-    userName: '',
-    password: '',
+    userName: 'Stas',
+    password: '123',
   });
+
+  console.log('signIn')  
 
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
