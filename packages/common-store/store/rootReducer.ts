@@ -1,10 +1,10 @@
 import { StateType } from 'typesafe-actions';
 import userReducer from './user/reducer';
-import configReducer from './config/reducer';
+import authReducer from './auth/reducer';
 
 const rootReducer = {
   users: userReducer,
-  config: configReducer,
+  auth: authReducer,
 };
 
 export type RootState = StateType<typeof rootReducer>;

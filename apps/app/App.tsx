@@ -1,18 +1,20 @@
 import React from 'react'
-import { configureStore, RootState, LoginAction } from '@lib/common-store';
+import { configureStore, RootState, authActions, userActions } from '@lib/common-store';
+import { AuthNavigator } from '@lib/common-mobile-auth';
 import { Provider, useDispatch, useSelector } from 'react-redux'
-import { StyleSheet, TextInput } from 'react-native';
+import { Button, Text, StyleSheet, StatusBar, View, Platform } from 'react-native';
 import useAddReducer from './src/utils/useAddReducer';
-// import {
-//   Provider as UIProvider,
-//   Theme as defaultTheme,
-// } from '@lib/common-ui/configuration'
-// import { useFonts } from 'expo-font'
-// import AppLoading from 'expo-app-loading'
+import {
+  Provider as UIProvider,
+  Theme as defaultTheme,
+} from '@lib/common-ui/configuration'
+import { useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading'
 // import AppNavigation from './src/navigatiors/AppNavigator'
-import { Button, Text, View } from 'react-native';
+
 import docReducer from './src/store/docStore/doc.reducer';
 import { IDocState, IDocument } from './src/store/docStore/types';
+import { NavigationContainer } from '@react-navigation/native';
 
 // import myReducer, { MyState } from './src/store/reducer';
 
@@ -26,7 +28,7 @@ const MyDocuments = () => {
   const dispatch = useDispatch();
 
   const handleLoad = async () => {
-    dispatch(LoginAction({ userName: 'Stas', 'password': '123' }));
+    dispatch(userActions.LoginAction({ userName: 'Stas', 'password': '123' }));
   }
 
   // const docData: IDocument[] = [];
@@ -42,41 +44,48 @@ const MyDocuments = () => {
 
 const Mytext = () => {
   const { data, loading, error, status } = useSelector((state: RootState) => state.users);
-  const { server, port } = useSelector((state: RootState) => state.config);
+  const settings = useSelector((state: RootState) => state.auth.settings);
 
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
-    dispatch(LoginAction({ userName: 'Stas', 'password': '123' }));
+    dispatch(userActions.LoginAction({ userName: 'Stas', 'password': '123' }));
   }
 
   return (
     <View>
-      <Button title="Load" onPress={handleLogin} />
+      <Button title="Load user" onPress={handleLogin} />
       <Text>{loading ? 'is loading' : 'loaded'}</Text>
       <Text>{error ? status : 'no error'}</Text>
       <Text>ID: {data?.id || 'no data'}</Text>
-      <Text>NAME: {data?.name || 'no data'}</Text>
-      <Text>serverName: {server || 'no data'}</Text>
-      <Text>port: {port || 'no data'}</Text>
+      <Text>NAME: {data?.userName || 'no data'}</Text>
+      <Text>serverName: {settings?.server || 'no data'}</Text>
+      <Text>port: {settings?.port || 'no data'}</Text>
     </View >
   )
 }
 
+
 export default function App() {
-  /*   const [loaded] = useFonts({
-      OpenSans: require('./assets/fonts/OpenSans-Regular.ttf'),
-    }) */
+  const [loaded] = useFonts({
+    OpenSans: require('./assets/fonts/OpenSans-Regular.ttf'),
+  })
 
   return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <Mytext />
-        <MyDocuments />
-      </View>
+      <UIProvider theme={defaultTheme}>
+        {Platform.OS === 'ios' && <StatusBar barStyle={'dark-content'} />}
+        <NavigationContainer>
+          {loaded ? <AuthNavigator /> : <AppLoading />}
+        </NavigationContainer>
+      </UIProvider>
     </Provider>
   );
 
+
+  {/* <Mytext /> */ }
+  {/* <Mytext />
+            <MyDocuments /> */}
 
   /*   return (
       <StoreProvider store={store}>

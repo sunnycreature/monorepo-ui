@@ -1,12 +1,9 @@
+import { IUser } from "@lib/types";
+
 export enum UsersTypes {
   LOGIN = 'USER/LOGIN',
   LOGIN_SUCCCES = 'USER/LOGIN_SUCCCES',
   LOGIN_FAILURE = 'USER/LOGIN_FAILURE',
-}
-
-export interface User {
-  id: string;
-  name: string;
 }
 
 export interface UserCredentials {
@@ -15,7 +12,7 @@ export interface UserCredentials {
 }
 
 export interface UserState {
-  readonly data: User | null;
+  readonly data: IUser | null;
   readonly loading: boolean;
   readonly error: boolean;
   readonly status: string;
@@ -23,5 +20,5 @@ export interface UserState {
 
 export type UserPayload = Partial<{
   errorMessage: string;
-  userData: User;
+  userData: IUser;
 }>;
