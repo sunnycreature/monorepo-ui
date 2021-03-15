@@ -1,49 +1,15 @@
 
-import { IReferences, IModels } from './data';
+import { IReferences } from './data';
+import { IModels } from './model';
 import { IDocument } from './document';
 
-import { IBaseUrl } from '@lib/common-client-types';
-
-export interface IDataFetch {
-  isLoading: boolean;
-  isError: boolean;
-  status?: string;
-}
+import { IApiConfig } from '@lib/common-client-types';
 
 export interface IServiceState {
   isLoading: boolean;
-  serverUrl?: IBaseUrl;
+  serverUrl?: IApiConfig;
   deviceId?: string;
   storagePath?: string;
-}
-
-export interface IServiceContextProps {
-  state: IServiceState;
-  // actions: typeof ServiceActions;
-  // apiService: Api;
-  // storageService: Sync;
-}
-
-export interface IAuthContextProps {
-  state: IAuthState;
-  // actions: typeof AuthActions;
-}
-
-export interface IAppContextProps {
-  state: IAppState;
-  // actions: typeof AppActions;
-}
-
-export interface IAuthState {
-  companyID?: string | null;
-  userID?: string | null;
-  deviceRegistered?: boolean;
-  deviceActive?: boolean;
-  deviceId?: string;
-  profile?: {
-    userName: string;
-    companyName: string;
-  };
 }
 
 export interface IForm {
@@ -62,6 +28,10 @@ export interface ICompanySetting {
   [name: string]: unknown;
 }
 
+export interface ICompanySettings {
+  [name: string]: ICompanySetting;
+}
+
 export interface IWeightCodeSettings {
   weightCode: string;
   code: number;
@@ -73,10 +43,6 @@ export interface IAppSettings {
   autodeletingDocument?: boolean;
   barcodeReader?: boolean;
   darkTheme?: boolean;
-}
-
-export interface ICompanySettings {
-  [name: string]: ICompanySetting;
 }
 
 export interface IViewParams {
