@@ -9,16 +9,16 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Avatar, Caption, Divider, Drawer, Title, useTheme } from 'react-native-paper';
 import Animated from 'react-native-reanimated';
 
-// import { useAuth } from '@lib/mob-auth';
+import { RootState } from '@lib/common-store';
 import { IUser } from '@lib/types';
+import { useSelector } from 'react-redux';
 
 type Props = DrawerContentComponentProps<DrawerContentOptions>;
 
 export function DrawerContent(props: Props) {
   const paperTheme = useTheme();
 
-  // const { user } = useAuth();
-  const user: IUser = { creatorId: '1', password: '1', role: 'Admin', userName: 'aaa' };
+  const user = useSelector((state: RootState) => state.auth.user);  
 
   const translateX = Animated.interpolate(props.progress, {
     inputRange: [0, 0.5, 0.7, 0.8, 1],
