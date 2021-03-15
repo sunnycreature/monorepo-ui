@@ -59,7 +59,7 @@ const AuthNavigator: React.FC = () => {
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       {device ? (
-        <AuthStack.Screen name="Login" component={SignInWithParams} />
+        <AuthStack.Screen name="Login" component={SignInWithParams} options={{ animationTypeForReplace: 'push' }}/>
       ) : settingsForm ? (
         <AuthStack.Screen name="Config" component={CongfigWithParams} />
       ) : device === undefined ? (

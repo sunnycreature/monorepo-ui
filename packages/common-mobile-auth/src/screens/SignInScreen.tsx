@@ -26,7 +26,7 @@ type Props = {
 
 const SignInScreen = (props: Props) => {
   const { onDisconnect, onSignIn, serverReq } = props;
-  const { colors } = useTheme();
+  const { colors } = useTheme();  
 
   const [credential, setCredentials] = useState<IUserCredentials>({
     userName: 'Stas',

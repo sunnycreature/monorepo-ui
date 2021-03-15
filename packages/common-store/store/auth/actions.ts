@@ -8,6 +8,7 @@ export const setSettings = createAction('AUTH/SET_SETTINGS')<IBaseUrl>();
 
 export const setSettingsForm = createAction('AUTH/SET_SETTINGS_FORM')<boolean>();
 export const disconnect = createAction('AUTH/DISCONNECT')();
+export const logout = createAction('AUTH/LOGOUT')(); // TODO Сделать sync c выходом на сервере 
 
 const checkDeviceAsync = createAsyncAction(
   'AUTH/CONNECTION',
@@ -21,6 +22,6 @@ const loginUserAsync = createAsyncAction(
   'AUTH/LOGIN_FAILURE',
 )<string, IUser, string>();
 
-export const authActions = { init, setSettings, disconnect, setSettingsForm, checkDeviceAsync, loginUserAsync };
+export const authActions = { init, setSettings, disconnect, setSettingsForm, logout, checkDeviceAsync, loginUserAsync };
 
 export type AuthActionType = ActionType<typeof authActions>;

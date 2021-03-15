@@ -2,14 +2,16 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Avatar, Divider, useTheme, Button } from 'react-native-paper';
 
-// import { useAuth } from '@lib/mob-auth';
-import { IUser } from '@lib/types';
+import { authActions, RootState } from '@lib/common-store';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ProfileScreen = () => {
   const { colors } = useTheme();
-  // const { user, signOut } = useAuth();
-  const user: IUser = { creatorId: '1', password: '1', role: 'Admin', userName: 'aaa' };
-  const signOut = () => console.log('signOut');
+  const user = useSelector((state: RootState) => state.auth.user);
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => dispatch(authActions.logout())
 
   return (
     <View style={styles.container}>
@@ -32,7 +34,7 @@ const ProfileScreen = () => {
       </View>
       <Divider />
       <View>
-        <Button mode="outlined" style={[styles.button]} onPress={signOut}>
+        <Button mode="outlined" style={[styles.button]} onPress={handleLogout}>
           Сменить пользователя
         </Button>
         <Button

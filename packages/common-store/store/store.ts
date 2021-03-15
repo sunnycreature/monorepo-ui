@@ -3,11 +3,11 @@ import thunk from 'redux-thunk';
 import { applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { UserState } from './user/types';
 import rootReducer from './rootReducer';
+import { IAuthState } from './auth/types';
 export { RootState } from './rootReducer';
 
-export type IState = UserState;
+export type IState = IAuthState;
 
 export interface StoreWithAsyncReducers extends Store {
   asyncReducers?: { [key: string]: Reducer }
