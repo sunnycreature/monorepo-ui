@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, Platform, TextInput, StyleSheet } from 'react-native';
 import { Text, Button } from 'react-native-paper';
 
-import  { globalStyles } from '@lib/common-ui';
+import { globalStyles } from '@lib/common-ui';
 
 export type Props = {
   settings: IBaseUrl | undefined;

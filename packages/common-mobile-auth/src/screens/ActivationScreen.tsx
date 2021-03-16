@@ -21,7 +21,8 @@ const ActivationScreen = () => {
     isLoading: false,
     status: '',
   };
-  
+
+  // TODO Прятать клаву и прокинуть пропсами 
   const disconnect = () => { };
   const activate = (code: string) => { };
 
@@ -30,7 +31,7 @@ const ActivationScreen = () => {
   const isFocused = useIsFocused();
 
   const sendActivationCode = async () => {
-    await activate(activationCode);
+    // await activate(activationCode);
   };
 
   return (
@@ -72,7 +73,7 @@ const ActivationScreen = () => {
         <IconButton
           icon="server"
           size={30}
-          onPress={() => disconnect()}
+          onPress={onDisconnect}
           style={{
             ...globalStyles.circularButton,
             backgroundColor: colors.primary,

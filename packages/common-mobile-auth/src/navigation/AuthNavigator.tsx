@@ -10,7 +10,6 @@ import { SplashScreen } from '../screens/SplashScreen';
 import { authActions, RootState } from '@lib/common-store';
 import { IBaseUrl, IUserCredentials } from '@lib/types';
 
-
 type AuthStackParamList = {
   Connection: undefined;
   Splash: undefined;

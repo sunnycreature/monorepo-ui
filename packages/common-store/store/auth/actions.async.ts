@@ -14,7 +14,7 @@ const checkDevice = (): ThunkAction<void, IAuthState, unknown, AnyAction> => {
   return async (dispatch) => {
     let response: DevicePayload = { deviceData: device };
 
-    dispatch(authActions.checkDeviceAsync.request('', ''));
+    dispatch(authActions.checkDeviceAsync.request(''));
 
     await sleep(1000);
 
@@ -26,13 +26,29 @@ const checkDevice = (): ThunkAction<void, IAuthState, unknown, AnyAction> => {
   }
 }
 
+const activateDevice = (code: string): ThunkAction<void, IAuthState, unknown, AnyAction> => {
+  return async (dispatch) => {
+    let response: DevicePayload = { deviceData: device };
+
+    dispatch(authActions.activateDeviceAsync.request(code));
+
+    await sleep(1000);
+
+    if (response.deviceData) {
+      return dispatch(authActions.activateDeviceAsync.success(response.deviceData));
+    }
+
+    return dispatch(authActions.activateDeviceAsync.failure('device does not exist'));
+  }
+}
+
 const signIn = (credentials: IUserCredentials): ThunkAction<void, IAuthState, unknown, AnyAction> => {
   return async (dispatch) => {
     let response: UserPayload;
 
     dispatch(authActions.loginUserAsync.request(''));
 
-    await sleep(1000);
+    await sleep(1000); // Запрос к серверу
 
     if (credentials.userName === 'Stas') {
       if (credentials.password === '123') {
@@ -41,7 +57,6 @@ const signIn = (credentials: IUserCredentials): ThunkAction<void, IAuthState, un
         };
 
         if (response.userData) {
-          console.log('userData', response.userData);
           return dispatch(authActions.loginUserAsync.success(response.userData));
         }
 
@@ -53,4 +68,4 @@ const signIn = (credentials: IUserCredentials): ThunkAction<void, IAuthState, un
   };
 };
 
-export default { checkDevice, signIn }
+export default { checkDevice, activateDevice, signIn }

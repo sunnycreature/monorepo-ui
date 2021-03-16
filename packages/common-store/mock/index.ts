@@ -1,4 +1,4 @@
-import { IBaseUrl, IDevice, IUser } from '@lib/types';
+import { IBaseUrl, ICompany, IDevice, IUser } from '@lib/types';
 
 export const config: IBaseUrl = {
   port: 3649,
@@ -16,6 +16,12 @@ export const device: IDevice = {
   id: '111',
 };
 
+export const company: ICompany = {
+  id: "1234",
+  admin: "1234",
+  title: 'ОДО Золотые Программы',
+};
+
 export const user: IUser = {
   id: '1',
   creatorId: '1',
@@ -24,5 +30,5 @@ export const user: IUser = {
   userName: 'Шляхтич Станислав',
   firstName: 'Станислав',
   lastName: 'Шляхтич ',
-  companies: ['ОДО Золотые Программы'],
+  companies: ['ОДО Золотые Программы', 'Амперсант'],
 };
