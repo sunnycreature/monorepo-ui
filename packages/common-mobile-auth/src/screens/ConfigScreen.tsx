@@ -5,6 +5,7 @@ import { View, KeyboardAvoidingView, Platform, TextInput, StyleSheet } from 'rea
 import { Text, Button } from 'react-native-paper';
 
 import { globalStyles } from '@lib/common-ui';
+import { SubTitle } from '@lib/common-ui/src/components';
 
 export type Props = {
   settings: IBaseUrl | undefined;
@@ -45,7 +46,7 @@ const ConfigScreen = (props: Props) => {
 
   return (
     <KeyboardAvoidingView style={globalStyles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <Text style={globalStyles.title}>Настройка подключения</Text>
+      <SubTitle>Настройка подключения</SubTitle>
       <TextInput
         value={serverName}
         onChangeText={setServerName}

@@ -18,29 +18,38 @@ const checkDevice = (): ThunkAction<void, IAuthState, unknown, AnyAction> => {
 
     await sleep(1000);
 
+    response = { deviceData: null, errorMessage: 'something wrong' };
+
     if (response.deviceData) {
       return dispatch(authActions.checkDeviceAsync.success(response.deviceData));
     }
 
-    return dispatch(authActions.checkDeviceAsync.failure('device does not exist'));
+    if (response.deviceData === null) {
+      return dispatch(authActions.checkDeviceAsync.success(response.deviceData));
+    }
+
+    return dispatch(authActions.checkDeviceAsync.failure(response.errorMessage || 'device does not exist'));
   }
 }
 
 const activateDevice = (code: string): ThunkAction<void, IAuthState, unknown, AnyAction> => {
   return async (dispatch) => {
-    let response: DevicePayload = { deviceData: device };
+    let response: DevicePayload;
 
-    dispatch(authActions.activateDeviceAsync.request(code));
+    dispatch(authActions.activateDeviceAsync.request(''));
 
     await sleep(1000);
+    console.log('code', code);
 
-    if (code = '1234') {
+    if (code === '1234') {
       response = {
         deviceData: device
       };
+
       if (response.deviceData) {
         return dispatch(authActions.activateDeviceAsync.success(response.deviceData));
       }
+
       return dispatch(authActions.activateDeviceAsync.failure('device does not exist'));
     }
     return dispatch(authActions.activateDeviceAsync.failure('wrong code'));

@@ -1,3 +1,4 @@
-export * from './configuration'
-export * from './src/primitives'
-export { default as globalStyles } from './styles/global'
+export * from './src/configuration';
+export * from './src/primitives';
+export { BottomSheet, RadioGroup, ItemSeparator } from './src/components';
+export { globalStyles } from './src/styles/global';

@@ -1,9 +1,10 @@
 import { useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
-import { View, KeyboardAvoidingView, StyleSheet, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { View, KeyboardAvoidingView, StyleSheet, Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { Text, Button, ActivityIndicator, IconButton, TextInput, useTheme } from 'react-native-paper';
 import { globalStyles } from '@lib/common-ui';
 import { IDataFetch } from '@lib/types';
+import { SubTitle } from '@lib/common-ui/src/components';
 
 type Props = {
   request: IDataFetch;
@@ -19,6 +20,7 @@ const ActivationScreen = (props: Props) => {
   console.log('Activation')
 
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
 
@@ -39,10 +41,10 @@ const ActivationScreen = (props: Props) => {
 
   return (
     <>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView style={[globalStyles.container, isKeyboardVisible && styles.contentWidthKbd]}>
-          <View style={globalStyles.container}>
-            <Text>Активация устройства</Text>
+          <View>
+            <SubTitle>Активация устройства</SubTitle>
             <View
               style={{
                 ...styles.statusBox,
@@ -103,10 +105,11 @@ const styles = StyleSheet.create({
     marginTop: 15,
     textAlign: 'center',
   },
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  /*   container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    }, */
   contentWidthKbd: {
     justifyContent: 'flex-start',
     paddingTop: 60,

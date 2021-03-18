@@ -4,6 +4,7 @@ import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { Text, Button, IconButton, useTheme } from 'react-native-paper';
 
 import  { globalStyles } from '@lib/common-ui';
+import { SubTitle } from '@lib/common-ui/src/components';
 
 type Props = {
   settings: IBaseUrl | undefined;
@@ -21,7 +22,7 @@ const SplashScreen = (props: Props) => {
   return (
     <>
       <View style={[globalStyles.container, localStyles.container]}>
-        <Text style={globalStyles.title}>Подключение к серверу</Text>
+        <SubTitle>Подключение к серверу</SubTitle>        
         <Text style={localStyles.serverName}>
           {settings ? `${settings.protocol}${settings.server}:${settings.port}` : 'сервер не указан'}
         </Text>
@@ -82,7 +83,7 @@ const localStyles = StyleSheet.create({
   serverName: {
     color: '#888',
     fontSize: 18,
-    marginBottom: 10,
+    marginVertical: 10,
   },
   statusBox: {
     alignItems: 'center',

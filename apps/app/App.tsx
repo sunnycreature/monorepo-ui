@@ -5,7 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { configureStore, RootState } from '@lib/common-store';
 import { AuthNavigator } from '@lib/common-mobile-auth';
-import { Provider as UIProvider, Theme as defaultTheme } from '@lib/common-ui/configuration';
+import { Theme as defaultTheme, Provider as UIProvider } from '@lib/common-ui';
+
 import AppNavigation from './src/navigatiors/AppNavigator';
 
 const store = configureStore;

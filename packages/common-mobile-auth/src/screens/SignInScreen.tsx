@@ -6,6 +6,7 @@ import { IDataFetch, IUserCredentials } from '@lib/types';
 
 // import { useAuth } from '../context/auth';
 import { globalStyles } from '@lib/common-ui';
+import { SubTitle } from '@lib/common-ui/src/components';
 // import globalStyles from '../styles/global';
 
 /*
@@ -58,7 +59,7 @@ const SignInScreen = (props: Props) => {
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView style={[globalStyles.container, isKeyboardVisible && style.contentWidthKbd]}>
           <View>
-            <Text style={globalStyles.title}>Вход пользователя</Text>
+            <SubTitle>Вход пользователя</SubTitle>
             <TextInput
               returnKeyType="done"
               autoCorrect={false}
@@ -121,7 +122,7 @@ const style = StyleSheet.create({
   },
   contentWidthKbd: {
     justifyContent: 'flex-start',
-    paddingTop: 60,
+    paddingTop: 0,
   },
   errorText: {
     color: '#cc5933',

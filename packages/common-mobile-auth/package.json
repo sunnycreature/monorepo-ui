@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@lib/types": "1.0.0",
+    "@lib/common-ui": "1.0.0",
+    "@lib/common-store": "1.0.0",
     "@expo/webpack-config": "^0.12.61",
     "@expo/vector-icons": "^12.0.0",
     "@react-navigation/native": "^5.9.3",
@@ -19,7 +21,6 @@
     "expo": "^40.0.1",
     "react": "17.0.1",
     "react-redux": "^7.2.2",
-    "@lib/common-store": "*",
     "react-native-paper": "4.7.2",
     "babel-loader": "^8.2.2",
     "expo-app-loading": "^1.0.1",

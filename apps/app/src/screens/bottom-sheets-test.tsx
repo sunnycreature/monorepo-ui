@@ -1,18 +1,15 @@
 import React, { useRef, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { PrimaryInput, PrimaryButton } from '@lib/ui'
-// import { PrimaryInput, PrimaryButton } from '@lib/ui'
-import { BottomSheet, RadioGroup } from '@lib/components';
+import { Text, View, TextInput, Button } from 'react-native'
+import { BottomSheet, RadioGroup, globalStyles } from '@lib/common-ui';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { globalStyles } from '@lib/global-styles'
 
 export default function App() {
   const [name, setName] = useState('Stas');
   const bottomSheetRef = useRef<BottomSheetModal>(null);
-  const [selectedOption, setSelectedOption] = useState<{id: number, value: string} | null>(null);
+  const [selectedOption, setSelectedOption] = useState<{ id: number, value: string } | null>(null);
 
   const handlePresent = () => {
-    setSelectedOption(selectedOption ??options[0]);
+    setSelectedOption(selectedOption ?? options[0]);
     bottomSheetRef.current?.present();
   };
 
@@ -30,9 +27,8 @@ export default function App() {
   return (
     <View style={globalStyles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
-      <PrimaryButton title="Hello, world!" />
-      <PrimaryInput value={name} label="Name" onChangeText={setName} />
-      <PrimaryButton title={selectedOption?.value || 'Цвет не выбран'} onPress={handlePresent} />      
+      <TextInput value={name} onChangeText={setName} />
+      <Button title={selectedOption?.value || 'Цвет не выбран'} onPress={handlePresent} />
       <BottomSheetModalProvider>
         <BottomSheet
           sheetRef={bottomSheetRef}

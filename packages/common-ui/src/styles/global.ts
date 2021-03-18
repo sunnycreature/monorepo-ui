@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const globalstyles = StyleSheet.create({  
+const globalStyles = StyleSheet.create({
   bottomButtons: {
     alignItems: 'flex-end',
   },
@@ -25,10 +25,9 @@ const globalstyles = StyleSheet.create({
     fontSize: 18,
     height: 50,
     marginTop: 15,
-    // padding: 2,
   },
   rectangularButton: {
-    borderRadius: 5,
+    borderRadius: 4,
     height: 50,
     justifyContent: 'center',
     marginVertical: 15,
@@ -37,10 +36,8 @@ const globalstyles = StyleSheet.create({
     height: StyleSheet.hairlineWidth,
   },
   title: {
-    margin: 3,
-    fontSize: 18,
     textAlign: 'center',
   },
 });
 
-export default globalstyles;
+export { globalStyles };

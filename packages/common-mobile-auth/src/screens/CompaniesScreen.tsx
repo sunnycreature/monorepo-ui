@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { Text, RadioButton, Button, IconButton, useTheme } from 'react-native-paper';
 
-import  { globalStyles } from '@lib/common-ui';
+import { globalStyles } from '@lib/common-ui';
+import { SubTitle } from '@lib/common-ui/src/components';
 
 const CompaniesScreen = () => {
   const [selectedCompany, setSelectedCompany] = useState<string>();
@@ -29,26 +30,30 @@ const CompaniesScreen = () => {
 
   // TODO 2. Выбор компании (автоматический)
   useEffect(() => {
-   /*  const getCompanyId = async () => {
-      const savedCompany = await appStorage.getItem(`${userID}/companyId`);
-        // Автоматический вход:
-        //   Когда получим список организаций пользователя, проверим,
-        //   есть ли у пользователя организация, под которой он заходил в последний раз,
-        //   входит ли этот пользователь ещё в эту организацию.
-
-        // TODO Если хотим сменить то происходит снова автоматический вход
-      
-      if (!!savedCompany && companies.some((company) => company === savedCompany)) {
-        setSelectedCompany(savedCompany);
-        //   actions.setCompanyID({ companyId: savedCompany, companyName: savedCompany });
-      } else {
-        setSelectedCompany(companies[0]);
+    /*  const getCompanyId = async () => {
+       const savedCompany = await appStorage.getItem(`${userID}/companyId`);
+         // Автоматический вход:
+         //   Когда получим список организаций пользователя, проверим,
+         //   есть ли у пользователя организация, под которой он заходил в последний раз,
+         //   входит ли этот пользователь ещё в эту организацию.
+ 
+         // TODO Если хотим сменить то происходит снова автоматический вход
+       
+       if (!!savedCompany && companies.some((company) => company === savedCompany)) {
+         setSelectedCompany(savedCompany);
+         //   actions.setCompanyID({ companyId: savedCompany, companyName: savedCompany });
+       } else {
+         setSelectedCompany(companies[0]);
+       } 
       } 
-    };
-    if (userID !== null && companies?.length > 0) {
+       } 
+     };
+     if (userID !== null && companies?.length > 0) {
+       getCompanyId(); 
       getCompanyId(); 
-    }
-    */
+       getCompanyId(); 
+     }
+     */
   }, []);
 
   const logOut = async () => {
@@ -68,7 +73,7 @@ const CompaniesScreen = () => {
   return (
     <>
       <View style={globalStyles.container}>
-      <Text style={globalStyles.title}>Выбор организации</Text>
+        <SubTitle>Выбор организации</SubTitle>
         <ScrollView contentContainerStyle={localStyles.scrollContainer} style={localStyles.scroll}>
           <RadioButton.Group onValueChange={(newValue) => setSelectedCompany(newValue)} value={selectedCompany}>
             {companies?.length > 0 &&
@@ -98,7 +103,7 @@ const CompaniesScreen = () => {
             style={[globalStyles.rectangularButton, localStyles.button]}
             disabled={!companies?.length || !selectedCompany}
             onPress={async () => {
-                
+
               // actions.setCompanyID({ companyId: selectedCompany, companyName: selectedCompany });
               // await appStorage.setItem(`${userID}/companyId`, selectedCompany);
             }}

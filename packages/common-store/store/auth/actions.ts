@@ -15,19 +15,19 @@ const checkDeviceAsync = createAsyncAction(
   'AUTH/CONNECTION',
   'AUTH/CONNECTION_SUCCCES',
   'AUTH/CONNECTION_FAILURE',
-)<string, IDevice, string>();
+)<string | undefined, IDevice | null, string>();
 
 const activateDeviceAsync = createAsyncAction(
   'AUTH/ACTIVATE_DEVICE',
   'AUTH/ACTIVATE_DEVICE_SUCCCES',
   'AUTH/ACTIVATE_DEVICE_FAILURE',
-)<string, IDevice, string>();
+)<string | undefined, IDevice | null, string>();
 
 const loginUserAsync = createAsyncAction(
   'AUTH/LOGIN',
   'AUTH/LOGIN_SUCCCES',
   'AUTH/LOGIN_FAILURE',
-)<string | undefined, IUser, string>();
+)<string | undefined, IUser | null, string>();
 
 export const authActions = {
   init,

@@ -62,6 +62,7 @@ const AuthNavigator: React.FC = () => {
     ),
     [activateDevice, disconnect, serverReq]
   );
+  
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       {device? (

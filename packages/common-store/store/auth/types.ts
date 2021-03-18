@@ -21,7 +21,7 @@ export type CompanyPayload = Partial<{
 // TODO: заменить на  IResponse<IDevice>
 export type DevicePayload = Partial<{
   errorMessage: string;
-  deviceData: IDevice;
+  deviceData: IDevice | null;
 }>;
 
 // TODO: заменить на  IResponse<IUser>

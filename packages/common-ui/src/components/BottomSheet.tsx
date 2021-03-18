@@ -57,4 +57,4 @@ const localStyles = StyleSheet.create({
   },
 });
 
-export {BottomSheet };
+export { BottomSheet };
