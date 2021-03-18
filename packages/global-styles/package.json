@@ -1,0 +1,19 @@
+{
+  "name": "@lib/global-styles",
+  "version": "0.1.0",
+  "license": "ISC",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
+    "typescript": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.3",
+    "@types/react-native": "~0.63.50"
+  }
+}

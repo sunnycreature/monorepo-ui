@@ -4,6 +4,7 @@ import { PrimaryInput, PrimaryButton } from '@lib/ui'
 // import { PrimaryInput, PrimaryButton } from '@lib/ui'
 import { BottomSheet, RadioGroup } from '@lib/components';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { globalStyles } from '@lib/global-styles'
 
 export default function App() {
   const [name, setName] = useState('Stas');
@@ -27,7 +28,7 @@ export default function App() {
   ];
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
       <PrimaryButton title="Hello, world!" />
       <PrimaryInput value={name} label="Name" onChangeText={setName} />
