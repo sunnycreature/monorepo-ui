@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Text, View, StyleSheet } from 'react-native';
-import { RootState, userActions } from '@lib/common-store';
+import { RootState, authActions } from '@lib/common-store';
 
 import useAddReducer from '../utils/useAddReducer';
 import docReducer from '../store/docStore/doc.reducer';
@@ -16,7 +16,7 @@ export const MyDocuments = () => {
   const dispatch = useDispatch();
 
   const handleLoad = async () => {
-    dispatch(userActions.LoginAction({ userName: 'Stas', 'password': '123' }));
+    dispatch(authActions.signIn({ userName: 'Stas', 'password': '123' }));
   }
 
   // const docData: IDocument[] = [];
