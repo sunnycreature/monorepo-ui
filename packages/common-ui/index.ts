@@ -1,3 +1,3 @@
 export * from './configuration'
-export * from './primitives'
+export * from './src/primitives'
 export { default as globalStyles } from './styles/global'

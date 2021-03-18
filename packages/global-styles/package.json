@@ -1,7 +1,7 @@
 {
   "name": "@lib/global-styles",
-  "version": "0.1.0",
-  "license": "ISC",
+  "version": "1.0.0",
+  "license": "MIT",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
