@@ -10,6 +10,8 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@gorhom/bottom-sheet": "^2.0.3",
+    "@lib/components": "0.1.0",
     "@lib/common-store": "1.0.0",
     "@lib/common-mobile-nav": "1.0.0",
     "@lib/common-ui": "1.0.0",
