@@ -1,14 +1,11 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 
-import { ConfigScreen } from '../screens/ConfigScreen';
-import { ActivationScreen } from '../screens/ActivationScreen';
-import { SignInScreen } from '../screens/SignInScreen';
-import { SplashScreen } from '../screens/SplashScreen';
-
 import { authActions, RootState } from '@lib/common-store';
-import { IBaseUrl, IUserCredentials } from '@lib/types';
+import { IBaseUrl, ICompany, IUserCredentials } from '@lib/types';
+
+import { CompaniesScreen, SplashScreen, SignInScreen, ConfigScreen, ActivationScreen } from '../screens';
 
 type AuthStackParamList = {
   Connection: undefined;
@@ -16,20 +13,24 @@ type AuthStackParamList = {
   Login: undefined;
   Config: undefined;
   Activation: undefined;
+  Company: undefined;
 };
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
 
 const AuthNavigator: React.FC = () => {
-  const { device, settings, error, loading, status, settingsForm } = useSelector((state: RootState) => state.auth);
+  const { device, settings, error, loading, status, user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
-  const showSettings = (visible: boolean) => dispatch(authActions.setSettingsForm(visible));
   const saveSettings = (settings: IBaseUrl) => dispatch(authActions.setSettings(settings));
   const checkDevice = () => dispatch(authActions.checkDevice());
+  const activateDevice = (code: string) => dispatch(authActions.activateDevice(code))
+
   const disconnect = () => dispatch(authActions.disconnect());
   const signIn = (credentials: IUserCredentials) => dispatch(authActions.signIn(credentials))
-  const activateDevice = (code: string) => dispatch(authActions.activateDevice(code))
+  const logout = () => dispatch(authActions.logout())
+
+  const setCompany = (company: ICompany) => dispatch(authActions.setCompany(company));
 
   const serverReq = {
     isError: error,
@@ -38,15 +39,15 @@ const AuthNavigator: React.FC = () => {
   };
 
   const CongfigWithParams = useCallback(
-    () => <ConfigScreen onSetSettings={saveSettings} onShowSettings={showSettings} settings={settings} />,
-    [saveSettings, showSettings, settings],
+    () => <ConfigScreen onSetSettings={saveSettings} settings={settings} />,
+    [saveSettings, settings],
   );
 
   const SplashWithParams = useCallback(
     () => (
-      <SplashScreen request={serverReq} onShowSettings={showSettings} settings={settings} onCheckDevice={checkDevice} />
+      <SplashScreen request={serverReq} settings={settings} onCheckDevice={checkDevice} />
     ),
-    [checkDevice, showSettings, serverReq, settings],
+    [serverReq, settings],
   );
 
   const SignInWithParams = useCallback(
@@ -62,15 +63,33 @@ const AuthNavigator: React.FC = () => {
     ),
     [activateDevice, disconnect, serverReq]
   );
-  
+
+  const CompaniesWithParams = useCallback(
+    () => (
+      <CompaniesScreen onLogout={logout} onSetCompany={setCompany} />
+    ),
+    [activateDevice, disconnect, serverReq]
+  );
+
+
+  useEffect(() => {    
+    console.log('mount nav');    
+    return () => {
+      console.log('unmount nav');
+    };
+  }, []);
+
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-      {device? (
-        <AuthStack.Screen name="Login" component={SignInWithParams} options={{ animationTypeForReplace: 'push' }}/>
-      ) : settingsForm ? (
-        <AuthStack.Screen name="Config" component={CongfigWithParams} />
+      {device ? (
+        !user
+          ? <AuthStack.Screen name="Login" component={SignInWithParams} options={{ animationTypeForReplace: user ? 'pop' : 'push' }} />
+          : <AuthStack.Screen name="Company" component={CompaniesWithParams} options={{ animationTypeForReplace: 'push' }} />
       ) : device === undefined ? (
-        <AuthStack.Screen name="Splash" component={SplashWithParams} options={{ animationTypeForReplace: 'pop' }} />
+        <>
+          <AuthStack.Screen name="Splash" component={SplashWithParams} options={{ animationTypeForReplace: 'pop' }} />
+          <AuthStack.Screen name="Config" component={CongfigWithParams} />
+        </>
       ) : (
         <AuthStack.Screen name="Activation" component={ActivateWithParams} options={{ animationTypeForReplace: 'push' }} />
       )}

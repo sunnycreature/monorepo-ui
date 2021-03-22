@@ -1,8 +1,8 @@
 import { IBaseUrl } from '@lib/types';
-import { useTheme } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, Platform, TextInput, StyleSheet } from 'react-native';
-import { Text, Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 
 import { globalStyles } from '@lib/common-ui';
 import { SubTitle } from '@lib/common-ui/src/components';
@@ -10,18 +10,19 @@ import { SubTitle } from '@lib/common-ui/src/components';
 export type Props = {
   settings: IBaseUrl | undefined;
   onSetSettings: (settings: IBaseUrl) => void;
-  onShowSettings: (visible: boolean) => void;
 };
 
 const ConfigScreen = (props: Props) => {
-  const { settings, onSetSettings, onShowSettings } = props;
+  const navigation = useNavigation();  
+
+  const { settings, onSetSettings } = props;
   const [serverName, setServerName] = useState(settings?.server || '');
   const [serverPort, setServerPort] = useState(settings?.port.toString() || '');
   const [timeout, setTimeout] = useState(settings?.timeout?.toString() || '');
 
   const { colors } = useTheme();
 
-  const saveSettings = () => {
+  const handleSaveSettings = () => {
     /*     const match = serverName.match(/^(.*:\/\/)([A-Za-z0-9\-.]+)/);
     const protocol: string = match?.[1] || config.protocol;
     const server: string = match?.[2] || config.server; */
@@ -29,7 +30,7 @@ const ConfigScreen = (props: Props) => {
     const protocol: string = settings?.protocol || '';
     const server: string = serverName;
 
-    const url: IBaseUrl = {
+    const newSettings: IBaseUrl = {
       apiPath: settings?.apiPath || '',
       protocol,
       port: parseInt(serverPort, 10),
@@ -37,11 +38,9 @@ const ConfigScreen = (props: Props) => {
       server,
     };
 
-    onSetSettings(url);
-  };
+    onSetSettings(newSettings);
 
-  const hideSettings = () => {
-    onShowSettings(false);
+    navigation.navigate('Splash');
   };
 
   return (
@@ -67,7 +66,7 @@ const ConfigScreen = (props: Props) => {
       />
       <View style={localStyles.buttonsView}>
         <Button
-          onPress={saveSettings}
+          onPress={handleSaveSettings}
           icon="check"
           mode="contained"
           style={[globalStyles.rectangularButton, localStyles.button]}
@@ -75,7 +74,7 @@ const ConfigScreen = (props: Props) => {
           Принять
         </Button>
         <Button
-          onPress={hideSettings}
+          onPress={navigation.goBack}
           icon="cancel"
           mode="contained"
           style={[globalStyles.rectangularButton, localStyles.button]}

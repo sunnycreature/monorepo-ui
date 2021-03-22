@@ -18,7 +18,7 @@ type Props = DrawerContentComponentProps<DrawerContentOptions>;
 export function DrawerContent(props: Props) {
   const paperTheme = useTheme();
 
-  const user = useSelector((state: RootState) => state.auth.user);  
+  const { user, company } = useSelector((state: RootState) => state.auth);  
 
   const translateX = Animated.interpolate(props.progress, {
     inputRange: [0, 0.5, 0.7, 0.8, 1],
@@ -41,7 +41,7 @@ export function DrawerContent(props: Props) {
             <Title style={styles.title}>{user?.lastName}</Title>
           </View>
         </View>
-        <Caption style={styles.caption}>{user?.companies?.[0]}</Caption>
+        <Caption style={styles.caption}>{company?.title || ''}</Caption>
       </View>
       <Divider />
       <DrawerContentScrollView {...props}>

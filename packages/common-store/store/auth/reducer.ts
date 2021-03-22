@@ -13,7 +13,6 @@ const initialState: Readonly<IAuthState> = {
   error: false,
   loading: false,
   status: '',
-  settingsForm: false
 };
 
 const reducer: Reducer<IAuthState, AuthActionType> = (state = initialState, action: AuthActionType) => {
@@ -21,12 +20,8 @@ const reducer: Reducer<IAuthState, AuthActionType> = (state = initialState, acti
     case getType(authActions.init):
       return initialState;
 
-    // Settings
-    case getType(authActions.setSettingsForm):
-      return { ...state, settingsForm: action.payload };
-
     case getType(authActions.setSettings):
-      return { ...state, settings: action.payload, settingsForm: false };
+      return { ...state, settings: action.payload };
     // Device
     case getType(authActions.checkDeviceAsync.request):
       return { ...state, loading: true, status: '', error: false };
@@ -50,7 +45,7 @@ const reducer: Reducer<IAuthState, AuthActionType> = (state = initialState, acti
       return { ...state, error: false, status: '', loading: true };
 
     case getType(authActions.loginUserAsync.success):
-      return { ...state, user: action.payload, error: false, status: '', loading: false };
+      return { ...state, user: action.payload, error: false, status: '', loading: false, company: undefined };
 
     case getType(authActions.loginUserAsync.failure):
       return { ...state, error: true, status: action.payload, loading: false };

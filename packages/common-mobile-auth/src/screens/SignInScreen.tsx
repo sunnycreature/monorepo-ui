@@ -43,13 +43,15 @@ const SignInScreen = (props: Props) => {
 
     const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
 
+    console.log('mount signin');    
     return () => {
+      console.log('unmount signin');
       keyboardDidHideListener.remove();
       keyboardDidShowListener.remove();
     };
   }, []);
 
-  const logIn = () => {
+  const handleLogIn = () => {
     Keyboard.dismiss();
     onSignIn(credential);
   };
@@ -83,7 +85,7 @@ const SignInScreen = (props: Props) => {
               mode="contained"
               disabled={request.isLoading}
               icon="login"
-              onPress={logIn}
+              onPress={handleLogIn}
               style={globalStyles.rectangularButton}
             >
               Войти
@@ -122,7 +124,7 @@ const style = StyleSheet.create({
   },
   contentWidthKbd: {
     justifyContent: 'flex-start',
-    paddingTop: 0,
+    paddingTop: 60,
   },
   errorText: {
     color: '#cc5933',

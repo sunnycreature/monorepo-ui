@@ -4,10 +4,19 @@ import { Text, RadioButton, Button, IconButton, useTheme } from 'react-native-pa
 
 import { globalStyles } from '@lib/common-ui';
 import { SubTitle } from '@lib/common-ui/src/components';
+import { ICompany, IDataFetch, IResponse } from '@lib/types';
+import { company, company2 } from '@lib/common-store/mock';
 
-const CompaniesScreen = () => {
-  const [selectedCompany, setSelectedCompany] = useState<string>();
-  const [companies, setCompanies] = useState<string[]>([]);
+type Props = {
+  onLogout: () => {};
+  onSetCompany: (company: ICompany) => {};
+}
+
+const CompaniesScreen = (props: Props) => {
+  const { onLogout, onSetCompany } = props;
+
+  const [selectedCompany, setSelectedCompany] = useState<ICompany | undefined>(undefined);
+  const [companies, setCompanies] = useState<ICompany[]>([]);
 
   const { colors } = useTheme();
   // const { apiService } = useServiceStore();
@@ -19,14 +28,20 @@ const CompaniesScreen = () => {
 
   // TODO 1. Загрузка списка компаний
   useEffect(() => {
-    // const loadCompanies = async () => {
-    //   const response = await apiService.auth.getUserStatus();
-    //   if (response.result) {
-    //     setCompanies(response.data?.companies || []);
-    //   }
-    // };
-    // loadCompanies();
+    const loadCompanies = async () => {
+      // const response = await apiService.auth.getUserStatus();
+      const response: IResponse<ICompany[]> = { result: true, data: [company, company2] };
+
+      if (response.result) {
+        setCompanies(response.data || []);
+      }
+    };
+    loadCompanies();
   }, []);
+
+  useEffect(() => {
+    companies?.length && setSelectedCompany(companies[0]);
+  }, [companies]);
 
   // TODO 2. Выбор компании (автоматический)
   useEffect(() => {
@@ -56,17 +71,18 @@ const CompaniesScreen = () => {
      */
   }, []);
 
-  const logOut = async () => {
+  const handleLogOut = async () => {
     try {
+      onLogout();
       // const res = await apiService.auth.logout();
       // if (res.result) {
       //   actions.logOut();
       //   return;
       // }
       // throw new Error();
-      Alert.alert('Ошибка', 'Нет ответа от сервера', [{ text: 'Закрыть' }]);
+      // Alert.alert('Ошибка', 'Нет ответа от сервера', [{ text: 'Закрыть' }]);
     } catch (error) {
-      Alert.alert('Ошибка', 'Нет ответа от сервера', [{ text: 'Закрыть' }]);
+      // Alert.alert('Ошибка', 'Нет ответа от сервера', [{ text: 'Закрыть' }]);
     }
   };
 
@@ -75,21 +91,21 @@ const CompaniesScreen = () => {
       <View style={globalStyles.container}>
         <SubTitle>Выбор организации</SubTitle>
         <ScrollView contentContainerStyle={localStyles.scrollContainer} style={localStyles.scroll}>
-          <RadioButton.Group onValueChange={(newValue) => setSelectedCompany(newValue)} value={selectedCompany}>
+          <RadioButton.Group onValueChange={(value) => setSelectedCompany(companies.find(i => i.id === value))} value={selectedCompany?.id || ''}>
             {companies?.length > 0 &&
               companies.map((el) => {
                 return (
                   <TouchableOpacity
                     onPress={() => setSelectedCompany(el)}
-                    key={el}
+                    key={el.id}
                     style={[
                       { backgroundColor: selectedCompany === el ? colors.primary : colors.background },
                       localStyles.item,
                     ]}
                   >
                     <View style={localStyles.row}>
-                      <RadioButton value={el} color={colors.background} />
-                      <Text style={{ color: selectedCompany === el ? colors.background : colors.text }}>{el}</Text>
+                      <RadioButton value={el.id} color={colors.background} />
+                      <Text style={{ color: selectedCompany === el ? colors.background : colors.text }}>{el.title}</Text>
                     </View>
                   </TouchableOpacity>
                 );
@@ -99,16 +115,16 @@ const CompaniesScreen = () => {
         <View style={localStyles.buttonView}>
           <Button
             mode="contained"
-            icon="login"
+            icon="check-circle-outline"
             style={[globalStyles.rectangularButton, localStyles.button]}
-            disabled={!companies?.length || !selectedCompany}
+            disabled={!selectedCompany}
             onPress={async () => {
-
+              selectedCompany && onSetCompany(selectedCompany);
               // actions.setCompanyID({ companyId: selectedCompany, companyName: selectedCompany });
               // await appStorage.setItem(`${userID}/companyId`, selectedCompany);
             }}
           >
-            Войти
+            Выбрать
           </Button>
         </View>
       </View>
@@ -116,7 +132,7 @@ const CompaniesScreen = () => {
         <IconButton
           icon="account"
           size={30}
-          onPress={logOut}
+          onPress={handleLogOut}
           style={{
             ...globalStyles.circularButton,
             backgroundColor: colors.primary,

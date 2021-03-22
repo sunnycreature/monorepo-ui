@@ -5,9 +5,7 @@ import { IAuthState } from './types';
 
 const init = createAction('AUTH/INIT')<IAuthState>();
 export const setSettings = createAction('AUTH/SET_SETTINGS')<IBaseUrl>();
-
-export const setSettingsForm = createAction('AUTH/SET_SETTINGS_FORM')<boolean>();
-export const setCompany = createAction('SET_COMPANY_ID')<ICompany>();
+export const setCompany = createAction('AUTH/SET_COMPANY')<ICompany | undefined>();
 export const disconnect = createAction('AUTH/DISCONNECT')();
 export const logout = createAction('AUTH/LOGOUT')(); // TODO Сделать sync c выходом пользователя на сервере 
 
@@ -33,7 +31,6 @@ export const authActions = {
   init,
   setSettings,
   disconnect,
-  setSettingsForm,
   logout,
   setCompany,
   checkDeviceAsync,

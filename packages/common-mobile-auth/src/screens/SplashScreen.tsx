@@ -2,8 +2,9 @@ import { IBaseUrl, IDataFetch } from '@lib/types';
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { Text, Button, IconButton, useTheme } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
-import  { globalStyles } from '@lib/common-ui';
+import { globalStyles } from '@lib/common-ui';
 import { SubTitle } from '@lib/common-ui/src/components';
 
 type Props = {
@@ -11,18 +12,19 @@ type Props = {
   request: IDataFetch;
   onCheckDevice: () => void;
   onBreakConnection?: () => void;
-  onShowSettings: (visible: boolean) => void;
 };
 
 const SplashScreen = (props: Props) => {
-  const { onCheckDevice, onBreakConnection, request, settings, onShowSettings } = props;
- 
+  const { onCheckDevice, onBreakConnection, request, settings } = props;
+
   const { colors } = useTheme();
+
+  const navigation = useNavigation();
 
   return (
     <>
       <View style={[globalStyles.container, localStyles.container]}>
-        <SubTitle>Подключение к серверу</SubTitle>        
+        <SubTitle>Подключение к серверу</SubTitle>
         <Text style={localStyles.serverName}>
           {settings ? `${settings.protocol}${settings.server}:${settings.port}` : 'сервер не указан'}
         </Text>
@@ -59,7 +61,7 @@ const SplashScreen = (props: Props) => {
         <IconButton
           icon="server"
           size={30}
-          onPress={() => onShowSettings(true)}
+          onPress={() => navigation.navigate('Config')}
           color={colors.background}
           style={[globalStyles.circularButton, { backgroundColor: colors.primary }]}
         />

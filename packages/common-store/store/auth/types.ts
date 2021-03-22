@@ -5,7 +5,6 @@ export type IAuthState = {
   readonly device: IDevice | null | undefined;
   readonly company: ICompany | null | undefined;
   readonly settings: IBaseUrl | undefined;
-  readonly settingsForm: boolean;
   readonly loading: boolean;
   readonly error: boolean;
   readonly status: string;

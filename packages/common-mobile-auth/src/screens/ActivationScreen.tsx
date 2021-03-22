@@ -34,7 +34,7 @@ const ActivationScreen = (props: Props) => {
 
   const isFocused = useIsFocused();
 
-  const sendActivationCode = () => {
+  const handleActivate = () => {
     Keyboard.dismiss();
     onActivate(activationCode);
   };
@@ -68,7 +68,7 @@ const ActivationScreen = (props: Props) => {
               mode="contained"
               disabled={request.isLoading}
               icon={'login'}
-              onPress={sendActivationCode}
+              onPress={handleActivate}
               style={globalStyles.rectangularButton}
             >
               Отправить

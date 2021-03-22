@@ -18,9 +18,16 @@ export const device: IDevice = {
 
 export const company: ICompany = {
   id: "1234",
-  admin: "1234",
+  admin: "1",
   title: 'ОДО Золотые Программы',
 };
+
+export const company2: ICompany = {
+  id: "1232",
+  admin: "1",
+  title: 'ОДО Амперсант',
+};
+
 
 export const user: IUser = {
   id: '1',
@@ -30,5 +37,5 @@ export const user: IUser = {
   userName: 'Шляхтич Станислав',
   firstName: 'Станислав',
   lastName: 'Шляхтич ',
-  companies: ['ОДО Золотые Программы', 'Амперсант'],
+  companies: ["1234", "1235"],
 };
